@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>การรับสมัครนักเรียนปีการศึกษา 2569 | โรงเรียนชลบุรี "สุขบท"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #003366; --secondary: #FFCC00;
+            --pastel-yellow: #FFF9E1; --pastel-blue: #E3F2FD;
+            --pastel-green: #E8F5E9; --money-color: #2e7d32;
+            --pastel-purple: #F3E5F5;
+            --highlight-orange: #FF5722;
+        }
+
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+        .loader-content { text-align: center; animation: fadeInOut 1.5s infinite; }
+        .loader-logo { width: 90px; height: auto; }
+        .loader-text { margin-top: 15px; color: var(--primary); font-size: 0.9rem; }
+        @keyframes fadeInOut { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kanit', sans-serif; }
+        body { background-color: #f8fafd; color: #2C3E50; line-height: 1.6; scroll-behavior: smooth; opacity: 0; transition: opacity 0.8s ease; }
+        body.loaded { opacity: 1; }
+
+        nav { background: var(--primary); padding: 0.8rem 5%; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .nav-logo { font-weight: 600; font-size: 1rem; color: var(--secondary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .nav-links { display: flex; gap: 8px; }
+        .nav-links a { color: white; text-decoration: none; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; padding: 6px 14px; border-radius: 50px; background: rgba(255,255,255,0.1); transition: 0.3s; }
+        .nav-links a:hover { background: var(--secondary); color: var(--primary); transform: translateY(-2px); }
+
+        header { 
+            background: linear-gradient(rgba(0,51,102,0.85), rgba(0,51,102,0.85)), url('school-bg.png'); 
+            background-size: cover; 
+            background-position: center;
+            padding: 60px 5%; 
+            text-align: center; 
+            color: white; 
+        }
+        .hero-logo { width: 85px; height: auto; margin-bottom: 10px; }
+        header h1 { font-size: 2rem; color: var(--secondary); margin-bottom: 5px; }
+        header p { font-weight: 200; font-size: 1.1rem; }
+
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        section { margin-bottom: 40px; scroll-margin-top: 100px; transform: translateY(15px); opacity: 0; transition: 0.6s ease; }
+        section.show { transform: translateY(0); opacity: 1; }
+
+        .card { border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); background: white; border: 1px solid #eee; }
+        .quota-bg { background: var(--pastel-yellow); border-top: 5px solid #FBC02D; }
+        .gifted-bg { background: var(--pastel-blue); border-top: 5px solid #2196F3; }
+        .general-bg { background: var(--pastel-green); border-top: 5px solid #4CAF50; }
+        .special-bg { background: var(--pastel-purple); border-top: 5px solid #9C27B0; }
+
+        .mini-timer { display: inline-flex; align-items: center; gap: 12px; background: white; padding: 8px 22px; border-radius: 50px; margin-bottom: 15px; border: 1px solid #ddd; }
+        .timer-label { font-size: 0.85rem; color: #555; font-weight: 400; }
+        .timer-units-wrap { display: flex; gap: 8px; }
+        .timer-unit span { font-weight: bold; color: #d32f2f; font-size: 1.1rem; display: block; line-height: 1; text-align: center; }
+        .timer-unit p { font-size: 0.6rem; color: #666; text-align: center; }
+
+        .plan-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 10px; overflow: hidden; }
+        .plan-table th, .plan-table td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .plan-table th { background: #f0f0f0; color: var(--primary); }
+
+        .btn { padding: 12px 20px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.85rem; border: 2px solid var(--primary); cursor: pointer; }
+        .btn-reg { background: var(--primary); color: white; }
+        .btn-reg.locked { background: #bdc3c7; border-color: #bdc3c7; color: white; cursor: not-allowed; pointer-events: none; }
+        .btn-info { background: white; color: var(--primary); }
+        .btn-ebook { background: white; border-color: #FF9800; color: #FF9800; } /* สไตล์ปุ่ม eBook */
+        .btn-ebook:hover { background: #FFF3E0; }
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+        .btn-group .btn { flex: 1; min-width: 140px; }
+
+        .qa-card-custom { 
+            text-align: center; 
+            background: linear-gradient(135deg, #FF9800, #FF5722); 
+            border-radius: 20px; 
+            padding: 40px; 
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 87, 34, 0.3);
+            border: none;
+        }
+        .qa-card-custom h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .btn-qa-white { 
+            background: white; 
+            color: #FF5722; 
+            border: none; 
+            width: auto; 
+            min-width: 250px; 
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        .btn-qa-white:hover { background: #f0f0f0; transform: scale(1.05); }
+
+        footer { text-align: center; padding: 40px; color: #888; border-top: 1px solid #eee; }
+
+        @media (max-width: 768px) { .nav-logo span { display: none; } .nav-links a span { display: none; } .nav-links a { padding: 10px; } header h1 { font-size: 1.6rem; } .mini-timer { flex-direction: column; gap: 2px; padding: 10px 20px; border-radius: 20px; } }
+    </style>
+</head>
+<body>
+
+<div id="loader">
+    <div class="loader-content">
+        <img src="school-bg.png" alt="Logo" class="loader-logo">
+        <p class="loader-text">เตรียมข้อมูลระบบ...</p>
+    </div>
+</div>
+
+<nav>
+    <a href="#" class="nav-logo"><i class="fas fa-school"></i> <span>รับสมัครนักเรียน 2569</span></a>
+    <div class="nav-links">
+        <a href="#quota"><span>1.โควตา</span></a>
+        <a href="#gifted"><span>2.Gifted</span></a>
+        <a href="#general"><span>3.ทั่วไป</span></a>
+        <a href="#special"><span>4.พิเศษ</span></a>
+        <a href="#qa-section"><span>5.Q&A</span></a>
+    </div>
+</nav>
+
+<header>
+    <img src="school-bg.png" alt="Logo" class="hero-logo">
+    <h1>ระบบการรับสมัครนักเรียน ปีการศึกษา 2569</h1>
+    <p>โรงเรียนชลบุรี "สุขบท" สพม.ชบ รย</p>
+</header>
+
+<div class="container">
+
+    <section id="quota">
+        <h2 class="section-title"><i class="fas fa-user-check"></i> 1. รอบโควตานักเรียนเดิม (ม.3)</h2>
+        <div class="card quota-bg">
+            <span class="sub-title">ช่วงเวลาสมัคร: 12 - 16 มกราคม 2569</span>
+            <div class="mini-timer" id="timer-quota">
+                <span class="timer-label"><i class="far fa-clock"></i> เหลือเวลาอีก</span>
+                <div class="timer-units-wrap">
+                    <div class="timer-unit"><span class="d">00</span><p>วัน</p></div><div class="timer-unit"><span class="h">00</span><p>ชม.</p></div><div class="timer-unit"><span class="m">00</span><p>นาที</p></div><div class="timer-unit"><span class="s">00</span><p>วิ</p></div>
+                </div>
+            </div>
+            
+            <table class="plan-table">
+                <thead>
+                    <tr><th>แผนการเรียน (ม.4) - ห้องละ 40 คน</th><th style="text-align: center;">จำนวนห้อง</th><th style="text-align: center;">จำนวนรับ</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>ห้องเรียนวิทยาศาสตร์พลังสิบ</td><td align="center">1</td><td align="center">40</td></tr>
+                    <tr><td>ห้องเรียนเตรียมวิศวกรรมศาสตร์</td><td align="center">1</td><td align="center">40</td></tr>
+                    <tr><td>ห้องเรียนเตรียมพยาบาลและการแพทย์</td><td align="center">1</td><td align="center">40</td></tr>
+                    <tr><td>ห้องเรียนเตรียมวิทยาการสารสนเทศ</td><td align="center">1</td><td align="center">40</td></tr>
+                    <tr><td>ห้องเรียนเตรียมบริหารธุรกิจ</td><td align="center">2</td><td align="center">80</td></tr>
+                    <tr><td>ห้องเรียนเตรียมสังคมศาสตร์และภาษาศาสตร์ (จีน)</td><td align="center">2</td><td align="center">80</td></tr>
+                    <tr><td>ห้องเรียนเตรียมสังคมศาสตร์และภาษาศาสตร์ (ญี่ปุ่น)</td><td align="center">1</td><td align="center">40</td></tr>
+                    <tr><td>ห้องเรียนเตรียมดนตรีและการแสดง</td><td align="center">1</td><td align="center">40</td></tr>
+                </tbody>
+            </table>
+            <div class="btn-group">
+                <a href="Quato469.pdf" class="btn btn-info" target="_blank"><i class="fas fa-file-pdf"></i> ระเบียบการ ม.4</a>
+                <a href="https://heyzine.com/flip-book/d437fa11cb.html" class="btn btn-ebook" target="_blank"><i class="fas fa-book-open"></i> e-Book ม.4</a>
+                <a href="#" class="btn btn-reg locked" id="btn-quota">ยังไม่ถึงเวลาสมัคร</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="gifted">
+        <h2 class="section-title"><i class="fas fa-gem"></i> 2. รอบห้องเรียนพิเศษ (Gifted)</h2>
+        <div class="card gifted-bg">
+            <span class="sub-title">ช่วงรับสมัคร: 8 - 12 กุมภาพันธ์ 2569</span>
+            <div style="background: white; border: 1.5px solid #2196F3; padding: 15px; border-radius: 15px; margin: 15px 0; font-size: 0.9rem;">
+                <b style="color: var(--primary);">เงื่อนไขการสมัคร:</b> GPAX และเกรดวิชาวิทย์-คณิต-อังกฤษ <span style="color: #d32f2f; font-weight: 600;">ต้องไม่ต่ำกว่า 3.00</span>
+            </div>
+            <div class="mini-timer" id="timer-gifted">
+                <span class="timer-label"><i class="far fa-clock"></i> เหลือเวลาอีก</span>
+                <div class="timer-units-wrap">
+                    <div class="timer-unit"><span class="d">00</span><p>วัน</p></div><div class="timer-unit"><span class="h">00</span><p>ชม.</p></div><div class="timer-unit"><span class="m">00</span><p>นาที</p></div><div class="timer-unit"><span class="s">00</span><p>วิ</p></div>
+                </div>
+            </div>
+            <table class="plan-table">
+                <tbody>
+                    <tr><td>มัธยมศึกษาปีที่ 1 (Gifted)</td><td align="center">1 ห้อง</td><td align="center">36 คน</td></tr>
+                    <tr><td>มัธยมศึกษาปีที่ 4 (Gifted)</td><td align="center">1 ห้อง</td><td align="center">36 คน</td></tr>
+                </tbody>
+            </table>
+            <div class="btn-group">
+                <a href="GiftedM169.pdf" class="btn btn-info" target="_blank"><i class="fas fa-file-pdf"></i> ระเบียบการ ม.1</a>
+                <a href="https://heyzine.com/flip-book/2c347737e5.html" class="btn btn-ebook" target="_blank"><i class="fas fa-book-open"></i> e-Book ม.1</a>
+                
+                <a href="GiftedM469.pdf" class="btn btn-info" target="_blank"><i class="fas fa-file-pdf"></i> ระเบียบการ ม.4</a>
+                <a href="https://heyzine.com/flip-book/8e856465b7.html" class="btn btn-ebook" target="_blank"><i class="fas fa-book-open"></i> e-Book ม.4</a>
+                
+                <a href="#" class="btn btn-reg locked" id="btn-gifted" style="width: 100%;">ยังไม่ถึงเวลาสมัคร</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="general">
+        <h2 class="section-title"><i class="fas fa-users"></i> 3. รอบทั่วไป / EIS</h2>
+        <div class="card general-bg">
+            <span class="sub-title">สมัครออนไลน์: 19 - 23 มีนาคม 2569</span>
+            <div class="mini-timer" id="timer-general">
+                <span class="timer-label"><i class="far fa-clock"></i> เหลือเวลาอีก</span>
+                <div class="timer-units-wrap">
+                    <div class="timer-unit"><span class="d">00</span><p>วัน</p></div><div class="timer-unit"><span class="h">00</span><p>ชม.</p></div><div class="timer-unit"><span class="m">00</span><p>นาที</p></div><div class="timer-unit"><span class="s">00</span><p>วิ</p></div>
+                </div>
+            </div>
+            <table class="plan-table">
+                <thead>
+                    <tr><th>แผนการเรียน (ม.1) - ห้องละ 40 คน</th><th style="text-align: center;">จำนวนห้อง</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>ห้องเรียนบูรณาการใช้ภาษาอังกฤษ (EIS)</td><td align="center">1</td></tr>
+                    <tr><td>ห้องเรียนวิทยาศาสตร์พลังสิบ</td><td align="center">1</td></tr>
+                    <tr><td>ห้องเรียนวิทยาศาสตร์-คณิตศาสตร์</td><td align="center">3</td></tr>
+                    <tr><td>ห้องเรียนคณิตศาสตร์-ภาษาอังกฤษ</td><td align="center">2</td></tr>
+                    <tr><td>ห้องเรียนดนตรี</td><td align="center">1</td></tr>
+                    <tr><td>ห้องเรียนทั่วไป</td><td align="center">6</td></tr>
+                </tbody>
+            </table>
+            <div style="background: #FFF9C4; border: 2px solid #FBC02D; border-radius: 15px; padding: 20px; margin-top: 20px;">
+                <h4 style="color: var(--primary);"><i class="fas fa-bullhorn"></i> มัธยมศึกษาปีที่ 4 (รอบทั่วไป)</h4>
+                <p style="font-size: 0.9rem; margin-top: 5px;">เปิดรับสมัครแผนการเรียนเหมือนรอบโควตา <b>จะรับเพิ่มหลังจากรับรอบโควตาแล้วเท่านั้น</b></p>
+            </div>
+            <div class="btn-group">
+                <a href="GenM169.pdf" class="btn btn-info" target="_blank"><i class="fas fa-file-pdf"></i> ระเบียบการ ม.1</a>
+                <a href="https://heyzine.com/flip-book/693fa54e27.html" class="btn btn-ebook" target="_blank"><i class="fas fa-book-open"></i> e-Book ม.1</a>
+                
+                <a href="GenM469.pdf" class="btn btn-info" target="_blank"><i class="fas fa-file-pdf"></i> ระเบียบการ ม.4</a>
+                <a href="https://heyzine.com/flip-book/5ccd97fe9e.html" class="btn btn-ebook" target="_blank"><i class="fas fa-book-open"></i> e-Book ม.4</a>
+                
+                <a href="#" class="btn btn-reg locked" id="btn-general" style="width: 100%;">ยังไม่ถึงเวลาสมัคร</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="special">
+        <h2 class="section-title"><i class="fas fa-trophy"></i> 4. รอบความสามารถพิเศษ</h2>
+        <div class="card special-bg">
+            <div style="background: #e3f2fd; border: 2.5px dashed #003366; padding: 18px; border-radius: 15px; margin-bottom: 20px; text-align: center;">
+                <i class="fas fa-briefcase" style="font-size: 1.8rem; color: #003366; margin-bottom: 8px;"></i>
+                <h4 style="color: #003366; margin-bottom: 5px;">เตรียมความพร้อมก่อนการสมัคร</h4>
+                <p style="font-size: 0.9rem; color: #444;">โปรดเตรียม <b>เกียรติบัตร</b> หรือ <b>Portfolio</b> แสดงความสามารถที่โดดเด่น<br>เพื่อประกอบการพิจารณาในวันทดสอบทักษะ</p>
+            </div>
+
+            <div class="mini-timer" id="timer-special">
+                <span class="timer-label"><i class="far fa-clock"></i> เหลือเวลาอีก</span>
+                <div class="timer-units-wrap">
+                    <div class="timer-unit"><span class="d">00</span><p>วัน</p></div><div class="timer-unit"><span class="h">00</span><p>ชม.</p></div><div class="timer-unit"><span class="m">00</span><p>นาที</p></div><div class="timer-unit"><span class="s">00</span><p>วิ</p></div>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 15px;">
+                <div style="background: white; padding: 20px; border-radius: 15px; border-top: 5px solid #9C27B0; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                    <h4 style="color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px;">มัธยมศึกษาปีที่ 1</h4>
+                    <table style="width: 100%; font-size: 0.9rem;">
+                        <tr><td style="padding: 4px 0;">1. ดนตรีไทย</td><td align="right">จำนวน <b>5</b> คน</td></tr>
+                        <tr><td style="padding: 4px 0;">2. ดนตรีสากล</td><td align="right">จำนวน <b>5</b> คน</td></tr>
+                        <tr><td style="padding: 4px 0;">3. นาฏศิลป์</td><td align="right">จำนวน <b>5</b> คน</td></tr>
+                        <tr><td style="padding: 4px 0;">4. ทัศนศิลป์</td><td align="right">จำนวน <b>5</b> คน</td></tr>
+                    </table>
+                </div>
+
+                <div style="background: white; padding: 20px; border-radius: 15px; border-top: 5px solid #9C27B0; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                    <h4 style="color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px;">มัธยมศึกษาปีที่ 4</h4>
+                    <table style="width: 100%; font-size: 0.9rem;">
+                        <tr><td style="padding: 4px 0;">1. ดนตรีไทย</td><td align="right">จำนวน <b>5</b> คน</td></tr>
+                        <tr><td style="padding: 4px 0;">2. ดนตรีสากล</td><td align="right">จำนวน <b>5</b> คน</td></tr>
+                        <tr><td style="padding: 4px 0;">3. นาฏศิลป์</td><td align="right">จำนวน <b>5</b> คน</td></tr>
+                        <tr><td style="padding: 4px 0;">4. ทัศนศิลป์</td><td align="right">จำนวน <b>5</b> คน</td></tr>
+                        <tr><td style="padding: 4px 0;">5. ภาษาจีน</td><td align="right">จำนวน <b>10</b> คน</td></tr>
+                        <tr><td style="padding: 4px 0;">6. ภาษาญี่ปุ่น</td><td align="right">จำนวน <b>10</b> คน</td></tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <a href="SpecM169.pdf" class="btn btn-info" target="_blank"><i class="fas fa-file-pdf"></i> ระเบียบการสมัคร ม.1</a>
+                <a href="SpecM469.pdf" class="btn btn-info" target="_blank"><i class="fas fa-file-pdf"></i> ระเบียบการสมัคร ม.4</a>
+                <a href="#" class="btn btn-reg locked" id="btn-special">ยังไม่ถึงเวลาสมัคร</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="qa-section">
+        <div class="qa-card-custom">
+            <h3><i class="fas fa-question-circle"></i> 5. คำถามที่พบบ่อย</h3>
+            <a href="qa.html" class="btn btn-qa-white">ไปหน้า Q&A ทั้งหมด</a>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 โรงเรียนชลบุรี "สุขบท" | สพม.ชบ รย</p>
+</footer>
+
+<script>
+    window.addEventListener('load', function() {
+        const loader = document.getElementById('loader');
+        setTimeout(() => {
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+            document.body.classList.add('loaded');
+            document.querySelectorAll('section').forEach((s, i) => {
+                setTimeout(() => s.classList.add('show'), i * 150);
+            });
+        }, 1000);
+    });
+
+    function manageAdmission(elementId, btnId, startStr, endStr) {
+        const startDate = new Date(startStr).getTime();
+        const endDate = new Date(endStr).getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const btn = document.getElementById(btnId);
+            if (now < startDate) { if(btn) btn.innerHTML = "ยังไม่ถึงเวลาสมัคร"; }
+            else if (now <= endDate) { if(btn) { btn.innerHTML = "สมัครออนไลน์ที่นี่"; btn.classList.remove('locked'); btn.href = "https://skb.thaijobjob.com"; } }
+            else { if(btn) btn.innerHTML = "ปิดรับสมัครแล้ว"; }
+            
+            const distance = endDate - now;
+            const container = document.getElementById(elementId);
+            if (!container) return;
+            
+            if (distance < 0) {
+                container.innerHTML = "<span style='color:#999; font-size:0.9rem;'>สิ้นสุดการรับสมัครรอบนี้</span>";
+                return;
+            }
+            
+            container.querySelector(".d").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            container.querySelector(".h").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            container.querySelector(".m").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            container.querySelector(".s").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        }, 1000);
+    }
+
+    manageAdmission("timer-quota", "btn-quota", "January 12, 2026 08:30:00", "January 16, 2026 16:30:00");
+    manageAdmission("timer-gifted", "btn-gifted", "February 8, 2026 08:30:00", "February 12, 2026 16:30:00");
+    manageAdmission("timer-general", "btn-general", "March 19, 2026 08:30:00", "March 23, 2026 16:30:00");
+    manageAdmission("timer-special", "btn-special", "March 19, 2026 08:30:00", "March 23, 2026 16:30:00");
+</script>
+
+</body>
+</html>

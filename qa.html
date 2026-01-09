@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ถาม-ตอบ (Q&A) การรับสมัครนักเรียนปี พ.ศ. 2569 | โรงเรียนชลบุรี "สุขบท"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary: #003366; --secondary: #FFCC00; --bg: #f8fafc; --white: #ffffff; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kanit', sans-serif; }
+        body { background: var(--bg); color: #333; line-height: 1.6; }
+
+        .sticky-contact { background: var(--secondary); padding: 12px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .sticky-contact a { color: var(--primary); font-weight: 600; text-decoration: none; border: 1.5px solid var(--primary); padding: 5px 15px; border-radius: 50px; }
+
+        header { background: var(--primary); color: white; padding: 40px 5% 60px; text-align: center; }
+        header h1 { color: var(--secondary); font-size: 2rem; margin-bottom: 10px; }
+
+        .search-container { max-width: 800px; margin: -30px auto 30px; padding: 0 20px; }
+        .search-box { background: var(--white); display: flex; align-items: center; padding: 15px 25px; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .search-box input { border: none; outline: none; width: 100%; font-size: 1.1rem; margin-left: 10px; }
+
+        .timeline { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; }
+        .timeline::before { content: ''; position: absolute; left: 40px; top: 0; bottom: 0; width: 4px; background: #e2e8f0; border-radius: 2px; }
+
+        .timeline-section { position: relative; margin-bottom: 50px; }
+        .section-icon { position: absolute; left: 22px; top: 0; width: 40px; height: 40px; background: var(--primary); color: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; border: 4px solid var(--bg); }
+        .section-title { margin-left: 80px; font-size: 1.4rem; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--secondary); display: inline-block; padding-bottom: 5px; }
+
+        .qa-card { background: var(--white); margin-left: 80px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; transition: 0.3s; }
+        .qa-card:hover { border-color: var(--secondary); transform: translateX(5px); }
+        .qa-q { padding: 18px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 400; color: #2d3748; }
+        .qa-a { padding: 0 25px; max-height: 0; overflow: hidden; transition: 0.4s ease-out; background: #fffcf0; font-size: 0.95rem; color: #4a5568; }
+        .qa-card.active .qa-a { padding: 20px 25px; max-height: 2000px; border-top: 1px solid #fef3c7; }
+        .qa-card.active .qa-q { font-weight: 600; color: var(--primary); }
+
+        .highlight { color: #e53e3e; font-weight: 600; }
+
+        @media (max-width: 600px) {
+            .timeline::before { left: 20px; }
+            .section-icon { left: 2px; }
+            .section-title, .qa-card { margin-left: 45px; }
+            header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sticky-contact">
+    <i class="fas fa-phone-alt"></i> ติดต่อสอบถามห้องวิชาการ: <a href="tel:0965964728">096-596-4728</a>
+</div>
+
+<header>
+    <h1>ถาม-ตอบ (Q&A) การรับสมัครนักเรียนปี พ.ศ. 2569 </h1>
+    <p>รวมข้อมูลละเอียดการสมัครครบทุกขั้นตอนการรับสมัคร</p>
+</header>
+
+<div class="search-container">
+    <div class="search-box">
+        <i class="fas fa-search" style="color:#a0aec0"></i>
+        <input type="text" id="searchInput" placeholder="พิมพ์สิ่งที่ต้องการค้นหา เช่น 'ค่าเทอม', 'มอบตัว', 'ม.1'..." onkeyup="filterQA()">
+    </div>
+</div>
+
+<div class="timeline">
+    
+    <div class="timeline-section">
+        <div class="section-icon"><i class="fas fa-laptop-code"></i></div>
+        <h2 class="section-title">ระยะที่ 1: เตรียมตัวและระบบออนไลน์</h2>
+        <div class="qa-card"><div class="qa-q">1. เว็บไซต์หลักที่ใช้ในการสมัครเรียนคือลิงก์ใด? <i class="fas fa-chevron-down"></i></div><div class="qa-a">สมัครผ่านระบบออนไลน์ที่เว็บไซต์ <a href="https://skb.thaijobjob.com" target="_blank">https://skb.thaijobjob.com</a></div></div>
+        <div class="qa-card"><div class="qa-q">2. ทำไมควรใช้ Google Chrome ในการสมัคร? <i class="fas fa-chevron-down"></i></div><div class="qa-a"><span class="highlight">เพื่อความเสถียรที่สุด</span> และป้องกันปัญหาทางเทคนิคครับ</div></div>
+        <div class="qa-card"><div class="qa-q">3. ใช้โทรศัพท์มือถือสมัครได้หรือไม่? <i class="fas fa-chevron-down"></i></div><div class="qa-a">สมัครได้ครับ แต่แนะนำให้เปิดผ่าน Browser <span class="highlight">Google Chrome</span> ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">4. สำเนาบัตรประชาชนนักเรียนจำเป็นไหม? <i class="fas fa-chevron-down"></i></div><div class="qa-a">จำเป็นมากครับ เป็นเอกสารที่ต้องแนบเพิ่มในปีนี้ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">5. ไฟล์ ปพ.1 ที่ใช้สมัคร ต้องเป็นฉบับจริงหรือสำเนา? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ใช้ไฟล์ที่สแกนหรือถ่ายจากฉบับจริงที่มีตราโรงเรียนชัดเจนครับ</div></div>
+        <div class="qa-card"><div class="qa-q">6. ทะเบียนบ้านที่ใช้สมัคร ต้องใช้หน้าไหนบ้าง? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ใช้หน้าที่มีที่อยู่ และหน้าที่มีชื่อของนักเรียนครับ</div></div>
+        <div class="qa-card"><div class="qa-q">7. ขนาดไฟล์ "ไม่เกิน 1 MB" คือต่อหนึ่งไฟล์หรือรวมทั้งหมด? <i class="fas fa-chevron-down"></i></div><div class="qa-a"><span class="highlight">ต่อหนึ่งไฟล์ครับ</span> เช่น รูปถ่าย 1MB, ปพ.1 1MB แยกกันครับ</div></div>
+        <div class="qa-card"><div class="qa-q">8. ถ้ารูปถ่ายเอกสารแล้วขนาดไฟล์ใหญ่เกิน 1 MB ต้องทำอย่างไร? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ต้องทำการลดขนาดไฟล์ (Resize) ก่อนอัปโหลดครับ</div></div>
+        <div class="qa-card"><div class="qa-q">9. ระบบรองรับนามสกุลไฟล์ชนิดใดบ้าง? <i class="fas fa-chevron-down"></i></div><div class="qa-a">รองรับไฟล์ <span class="highlight">PNG, JPEG, JPG และ PDF</span> ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">10. รูปถ่ายนักเรียนต้องใส่ชุดอะไร? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ต้องเป็นรูปชุดนักเรียนจากโรงเรียนเดิมที่ถูกต้องตามระเบียบครับ</div></div>
+        <div class="qa-card"><div class="qa-q">11. หากอัปโหลดเอกสารผิด สามารถแก้ไขได้ไหม? <i class="fas fa-chevron-down"></i></div><div class="qa-a">แก้ไขได้ก่อนกด "ยืนยันการสมัคร" หรือภายในช่วงวันรับสมัครครับ</div></div>
+        <div class="qa-card"><div class="qa-q">12. ระบบเปิดให้สมัครได้ตลอด 24 ชั่วโมงใช่ไหม? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ใช่ครับ ระบบเปิด 24 ชั่วโมงในช่วงวันรับสมัครครับ</div></div>
+    </div>
+
+    <div class="timeline-section">
+        <div class="section-icon"><i class="fas fa-calendar-alt"></i></div>
+        <h2 class="section-title">ระยะที่ 2: ช่วงเวลาการรับสมัคร</h2>
+        <div class="qa-card"><div class="qa-q">13. ม.1 ห้องเรียนพิเศษ Gifted สมัครวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">8 - 12 กุมภาพันธ์ 2569</div></div>
+        <div class="qa-card"><div class="qa-q">14. ม.1 ห้องเรียนทั่วไป สมัครวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">19 - 23 มีนาคม 2569</div></div>
+        <div class="qa-card"><div class="qa-q">15. ม.1 ห้องเรียน EIS สมัครวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">19 - 23 มีนาคม 2569</div></div>
+        <div class="qa-card"><div class="qa-q">16. ม.1 ห้องวิทยาศาสตร์พลังสิบ สมัครวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">19 - 23 มีนาคม 2569</div></div>
+        <div class="qa-card"><div class="qa-q">17. ม.4 ห้องเรียนพิเศษ Gifted สมัครวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">8 - 12 กุมภาพันธ์ 2569</div></div>
+        <div class="qa-card"><div class="qa-q">18. ม.4 ห้องเรียนทั่วไป สมัครวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">19 - 23 มีนาคม 2569</div></div>
+        <div class="qa-card"><div class="qa-q">19. นักเรียนเดิมที่มีสิทธิ์โควตา ม.4 สมัครวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">12 - 16 มกราคม 2569</div></div>
+        <div class="qa-card"><div class="qa-q">20. ช่วงเวลา Walk-in ที่โรงเรียนคือวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a"><span class="highlight">2 วันสุดท้าย</span> ของแต่ละรอบการสมัครครับ</div></div>
+        <div class="qa-card"><div class="qa-q">21. เจ้าหน้าที่ช่วยสมัคร Walk-in ถึงกี่โมง? <i class="fas fa-chevron-down"></i></div><div class="qa-a">09.00 - 15.00 น. ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">22. จุดบริการ Walk-in อยู่ที่ไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ณ <span class="highlight">โรงอาหาร</span> โรงเรียนครับ</div></div>
+        <div class="qa-card"><div class="qa-q">23. เด็กในเขตพื้นที่บริการ ต้องสมัครประเภทไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">เลือก "ในเขตพื้นที่บริการ" ในรอบห้องทั่วไปครับ</div></div>
+        <div class="qa-card"><div class="qa-q">24. เด็กนอกเขตพื้นที่ สมัครห้องทั่วไปได้ไหม? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ได้ครับ โดยเลือก "นอกเขตพื้นที่บริการ"</div></div>
+        <div class="qa-card"><div class="qa-q">25. สอบความสามารถพิเศษสมัครวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">19 - 20 มีนาคม 2569</div></div>
+    </div>
+
+    <div class="timeline-section">
+        <div class="section-icon"><i class="fas fa-edit"></i></div>
+        <h2 class="section-title">ระยะที่ 3: วิชาสอบและการปฏิบัติตน</h2>
+        <div class="qa-card"><div class="qa-q">26. ห้อง Gifted ม.1 สอบวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">21 กุมภาพันธ์ 2569</div></div>
+        <div class="qa-card"><div class="qa-q">27. ห้อง Gifted ม.4 สอบวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">22 กุมภาพันธ์ 2569</div></div>
+        <div class="qa-card"><div class="qa-q">28. ห้องทั่วไป ม.1 สอบวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">28 มีนาคม 2569</div></div>
+        <div class="qa-card"><div class="qa-q">29. ห้องทั่วไป ม.4 สอบวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">29 มีนาคม 2569</div></div>
+        <div class="qa-card"><div class="qa-q">30. วิชาที่สอบห้อง Gifted มีอะไรบ้าง? <i class="fas fa-chevron-down"></i></div><div class="qa-a">คณิตศาสตร์, วิทยาศาสตร์, ภาษาอังกฤษ</div></div>
+        <div class="qa-card"><div class="qa-q">31. เกณฑ์ "ร้อยละ 50" ของ Gifted คิดอย่างไร? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ต้องได้ <span class="highlight">ไม่ต่ำกว่าร้อยละ 50</span> ในทุกวิชาครับ</div></div>
+        <div class="qa-card"><div class="qa-q">32. สอบผ่านแค่ 2 วิชา เข้าห้อง Gifted ได้ไหม? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ไม่ได้ครับ ต้องผ่านเกณฑ์ <span class="highlight">ทุกวิชา</span> ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">33. ห้องทั่วไป ม.1 สอบวิชาอะไรบ้าง? <i class="fas fa-chevron-down"></i></div><div class="qa-a">5 วิชาหลัก (ไทย, สังคม, คณิต, วิทย์, อังกฤษ)</div></div>
+        <div class="qa-card"><div class="qa-q">34. ห้องทั่วไป ม.4 สอบวิชาอะไรบ้าง? <i class="fas fa-chevron-down"></i></div><div class="qa-a">5 วิชาหลัก และวิชาเฉพาะสายที่เลือกครับ</div></div>
+        <div class="qa-card"><div class="qa-q">35. เวลาสอบห้องทั่วไปเริ่มกี่โมง? <i class="fas fa-chevron-down"></i></div><div class="qa-a">08.30 น. ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">36. เวลาสอบห้องทั่วไปสิ้นสุดกี่โมง? <i class="fas fa-chevron-down"></i></div><div class="qa-a">14.30 น. ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">37. ควรมาถึงสนามสอบก่อนกี่นาที? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ควรมาก่อนเวลา 30-45 นาทีครับ</div></div>
+        <div class="qa-card"><div class="qa-q">38. บัตรสอบต้องพิมพ์เป็นสีเท่านั้นไหม? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ได้ทั้งสีและขาวดำครับ ขอให้ชัดเจน</div></div>
+        <div class="qa-card"><div class="qa-q">39. ลืมบัตรประชาชนวันสอบ ทำอย่างไร? <i class="fas fa-chevron-down"></i></div><div class="qa-a">รีบติดต่อกองอำนวยการสอบทันทีครับ</div></div>
+        <div class="qa-card"><div class="qa-q">40. ดินสอที่ใช้ต้องเข้มระดับใด? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ต้องเป็นดินสอ <span class="highlight">2B</span> ขึ้นไปครับ</div></div>
+        <div class="qa-card"><div class="qa-q">41. ใช้ปากกาลบได้ในกระดาษคำตอบไหม? <i class="fas fa-chevron-down"></i></div><div class="qa-a">แนะนำให้ใช้ปากกาลูกลื่นสีน้ำเงินครับ</div></div>
+        <div class="qa-card"><div class="qa-q">42. สิ่งของที่ห้ามนำเข้าห้องสอบ? <i class="fas fa-chevron-down"></i></div><div class="qa-a"><span class="highlight">มือถือ, สมาร์ทวอทช์, เครื่องคิดเลข</span></div></div>
+        <div class="qa-card"><div class="qa-q">43. สนามสอบตั้งอยู่ที่ไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ณ โรงเรียนชลบุรี "สุขบท" ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">44. หากเจ็บป่วยวันสอบทำอย่างไร? <i class="fas fa-chevron-down"></i></div><div class="qa-a">รีบแจ้งเจ้าหน้าที่คุมสอบทันทีครับ</div></div>
+    </div>
+
+    <div class="timeline-section">
+        <div class="section-icon"><i class="fas fa-check-circle"></i></div>
+        <h2 class="section-title">ระยะที่ 4: ประกาศผลและมอบตัว</h2>
+        <div class="qa-card"><div class="qa-q">45. ประกาศผล Gifted เมื่อไหร่? <i class="fas fa-chevron-down"></i></div><div class="qa-a">26 กุมภาพันธ์ 2569</div></div>
+        <div class="qa-card"><div class="qa-q">46. ประกาศผลห้องทั่วไป ม.1 เมื่อไหร่? <i class="fas fa-chevron-down"></i></div><div class="qa-a">1 เมษายน 2569</div></div>
+        <div class="qa-card"><div class="qa-q">47. ประกาศผลห้องทั่วไป ม.4 เมื่อไหร่? <i class="fas fa-chevron-down"></i></div><div class="qa-a">2 เมษายน 2569</div></div>
+        <div class="qa-card"><div class="qa-q">48. ดูผลสอบได้ที่ไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">เว็บไซต์โรงเรียน หรือบอร์ดประชาสัมพันธ์ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">49. วันมอบตัวห้องเรียนทั่วไป ม.1 คือวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">4 เมษายน 2569 ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">50. วันมอบตัวห้องเรียนทั่วไป ม.4 คือวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">5 เมษายน 2569 ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">51. ค่ามอบตัว ห้อง Gifted เท่าไหร่? <i class="fas fa-chevron-down"></i></div><div class="qa-a"><span class="highlight">9,255 บาท</span> ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">52. ค่ามอบตัว พลังสิบ ม.1 เท่าไหร่? <i class="fas fa-chevron-down"></i></div><div class="qa-a">6,255 บาท ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">53. ค่ามอบตัว พลังสิบ ม.4 เท่าไหร่? <i class="fas fa-chevron-down"></i></div><div class="qa-a">6,250 บาท ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">54. ค่ามอบตัว ห้อง EIS ม.1 เท่าไหร่? <i class="fas fa-chevron-down"></i></div><div class="qa-a">6,255 บาท ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">55. ค่ามอบตัว ห้องทั่วไป ม.1 เท่าไหร่? <i class="fas fa-chevron-down"></i></div><div class="qa-a">3,555 บาท ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">56. ค่ามอบตัว ห้องทั่วไป ม.4 เท่าไหร่? <i class="fas fa-chevron-down"></i></div><div class="qa-a">3,550 บาท ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">57. สามารถผ่อนชำระค่าเทอมได้ไหม? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ต้องชำระยอดเต็มในวันมอบตัวครับ</div></div>
+        <div class="qa-card"><div class="qa-q">58. หากติดสำรองจะทราบผลได้อย่างไร? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ติดตามทางเพจและเว็บไซต์โรงเรียนครับ</div></div>
+        <div class="qa-card"><div class="qa-q">59. การรายงานตัวต้องทำอย่างไร? <i class="fas fa-chevron-down"></i></div><div class="qa-a"><span class="highlight">ต้องมารายงานตัวด้วยตนเอง</span> เพื่อยืนยันสิทธิ์ และรับเอกสารมอบตัวครับ</div></div>
+        <div class="qa-card"><div class="qa-q">60. หากไม่มามอบตัวถือว่าสละสิทธิ์ใช่ไหม? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ใช่ครับ <span class="highlight">สละสิทธิ์ทุกกรณี</span> ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">61. ต้องพานักเรียนมาวันมอบตัวด้วยไหม? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ต้องพามาวัดตัวตัดชุดครับ</div></div>
+        <div class="qa-card"><div class="qa-q">62. ย้ายแผนการเรียนหลังมอบตัวได้ไหม? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ขึ้นอยู่กับที่ว่างและงานวิชาการครับ</div></div>
+        <div class="qa-card"><div class="qa-q">63. ปพ.1 ที่นำมาส่งต้องเป็นฉบับใด? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ต้องเป็น <span class="highlight">ฉบับจบการศึกษา ปี 2568 เรียบร้อยแล้วเท่านั้น</span> ครับ</div></div>
+        <div class="qa-card"><div class="qa-q">64. ปพ.1 ในวันมอบตัวใช้ฉบับใดบ้าง? <i class="fas fa-chevron-down"></i></div><div class="qa-a">นำมาทั้ง <span class="highlight">ตัวจริง และถ่ายเอกสาร</span> (รับรองสำเนาและเซ็นกำกับด้วย)</div></div>
+        <div class="qa-card"><div class="qa-q">65. เอกสารอื่นที่ต้องเตรียมวันมอบตัว? <i class="fas fa-chevron-down"></i></div><div class="qa-a">สำเนาทะเบียนบ้านและสำเนาบัตรประชาชนครับ</div></div>
+        <div class="qa-card"><div class="qa-q">66. โรงเรียนเปิดเทอมวันไหน? <i class="fas fa-chevron-down"></i></div><div class="qa-a">ติดตามประกาศช่วงเดือนพฤษภาคมครับ</div></div>
+        <div class="qa-card"><div class="qa-q">67. สอบถามเรื่องวิชาการโทรเบอร์ใด? <i class="fas fa-chevron-down"></i></div><div class="qa-a">096-596-4728 (ห้องวิชาการ) ครับ</div></div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.qa-q').forEach(q => {
+        q.addEventListener('click', () => { q.parentElement.classList.toggle('active'); });
+    });
+    function filterQA() {
+        let input = document.getElementById('searchInput').value.toLowerCase();
+        let cards = document.getElementsByClassName('qa-card');
+        for (let i = 0; i < cards.length; i++) {
+            let text = cards[i].innerText.toLowerCase();
+            cards[i].style.display = text.includes(input) ? "" : "none";
+        }
+    }
+</script>
+</body>
+</html>

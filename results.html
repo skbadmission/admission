@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ประกาศผลการคัดเลือก | โรงเรียนชลบุรี "สุขบท"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #004e92; --secondary: #FFD700;
+            --bg: #eef2f3; --pass: #28a745; --waiting: #fd7e14; --fail: #dc3545;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kanit', sans-serif; }
+        
+        body { 
+            background-color: var(--bg); 
+            animation: fadeIn 1s ease-in-out; 
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        nav {
+            background: linear-gradient(to right, #000428, #004e92);
+            padding: 15px 5%; color: white; display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .btn-back { color: white; text-decoration: none; font-size: 0.9rem; background: rgba(255,255,255,0.2); padding: 8px 18px; border-radius: 50px; transition: 0.3s; }
+        .btn-back:hover { background: var(--secondary); color: var(--primary); }
+
+        header {
+            background: linear-gradient(135deg, #004e92 0%, #000428 100%);
+            padding: 50px 5% 80px; text-align: center; color: white;
+            border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
+        }
+        header h1 { color: var(--secondary); font-size: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+
+        .container { max-width: 900px; margin: -40px auto 50px; padding: 0 20px; }
+        
+        .selection-box {
+            background: white; padding: 30px; border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 25px;
+        }
+        .selection-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
+        
+        .type-btn {
+            padding: 15px; border-radius: 20px; border: 2px solid #eee;
+            background: white; cursor: pointer; transition: 0.3s; text-align: center;
+            font-size: 0.95rem; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80px;
+        }
+        .type-btn.active { border-color: var(--primary); background: #e3f2fd; color: var(--primary); font-weight: 600; }
+        .type-btn.disabled { opacity: 0.6; cursor: not-allowed; background: #fafafa; border-style: dashed; }
+
+        .search-area { background: white; padding: 30px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: none; margin-top: 20px; }
+        .search-area.show { display: block; animation: slideUp 0.5s ease-out; }
+        
+        .input-group { position: relative; margin: 20px 0; }
+        .input-group input { width: 100%; padding: 15px 50px; border-radius: 50px; border: 2px solid #ddd; outline: none; font-size: 1.1rem; text-align: center; }
+        .input-group i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #888; }
+
+        .btn-check { width: 100%; padding: 15px; border-radius: 50px; border: none; background: var(--primary); color: white; font-size: 1.1rem; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .btn-check:hover { background: #003366; transform: translateY(-2px); }
+
+        .result-display { margin-top: 30px; display: none; }
+        .result-card { background: white; padding: 40px; border-radius: 30px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.1); animation: slideUp 0.5s ease-out; }
+        
+        .btn-download { display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: white; padding: 12px 25px; border-radius: 50px; text-decoration: none; margin-top: 20px; transition: 0.3s; font-weight: 600; }
+        .btn-download:hover { background: var(--pass); transform: scale(1.05); }
+
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        footer { text-align: center; padding: 40px; color: #888; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> กลับหน้าหลัก</a>
+    <div class="nav-logo">ระบบประกาศผลสอบ 2569</div>
+</nav>
+
+<header>
+    <h1>ตรวจสอบผลการคัดเลือกนักเรียน</h1>
+    <p>โรงเรียนชลบุรี "สุขบท" | Chonburi Sukbot School</p>
+</header>
+
+<div class="container">
+    <div class="selection-box">
+        <h3 style="text-align:center;"><i class="fas fa-list-ul"></i> 1. เลือกประเภทที่สมัคร</h3>
+        <div class="selection-grid" id="typeGrid">
+            <div class="type-btn" onclick="selectType('quota', this)" id="btn-quota">รอบโควตานักเรียนเดิม</div>
+            <div class="type-btn" onclick="selectType('gifted', this)" id="btn-gifted">รอบห้องเรียนพิเศษ (Gifted)</div>
+            <div class="type-btn" onclick="selectType('special', this)" id="btn-special">รอบความสามารถพิเศษ</div>
+            <div class="type-btn" onclick="selectType('general', this)" id="btn-general">รอบห้องเรียนปกติ / EIS</div>
+        </div>
+    </div>
+
+    <div class="search-area" id="searchArea">
+        <h3 id="selectedTitle" style="text-align:center; color: var(--primary);">ค้นหารายชื่อ</h3>
+        <p style="text-align:center; color: #666; font-size: 0.8rem; margin: 10px 0;">กรอกเลขประจำตัวผู้สมัคร หรือ เลขบัตรประชาชน</p>
+        <div class="input-group">
+            <i class="fas fa-search"></i>
+            <input type="text" id="idInput" placeholder="ตัวอย่าง: 12001">
+        </div>
+        <button class="btn-check" id="searchBtn" onclick="fetchResult()">ตรวจสอบผลการสอบ</button>
+    </div>
+
+    <div class="result-display" id="resultDisplay">
+        <div class="result-card" id="resultCard"></div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Chonburi Sukbot School | Smart Admission Results</p>
+</footer>
+
+<script>
+    let currentType = '';
+    
+    // 🔗 รวมลิงก์ Google Sheets พร้อมเลข gid แยก Tab ตามที่เจ้านายให้มาครับ
+    const baseSheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vToBBpirBk8Z5hs31ggXMpdaNQdm7lQaQxlwKjegeDsgHufji1SrVW2fs4XMIiyCqK3JGVY7qfHydTY/pub?output=csv";
+
+    const sheetLinks = {
+        'quota':   baseSheetUrl + "&gid=0",
+        'gifted':  baseSheetUrl + "&gid=199296400",
+        'special': baseSheetUrl + "&gid=788651695",
+        'general': baseSheetUrl + "&gid=1326972360"
+    };
+
+    function selectType(type, element) {
+        // ถ้ารอบนี้ยังไม่ถึงเวลาประกาศผล จะแสดง Pop-up และไม่เปิดส่วนค้นหาครับ
+        if (element.classList.contains('disabled')) {
+            alert("ขออภัยครับ รอบการสมัครนี้ยังไม่มีข้อมูลประกาศผลสอบในระบบ");
+            return;
+        }
+        
+        currentType = type;
+        document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+        
+        document.getElementById('searchArea').classList.add('show');
+        document.getElementById('selectedTitle').innerText = "ค้นหารายชื่อ: " + element.innerText;
+        document.getElementById('resultDisplay').style.display = 'none';
+        document.getElementById('idInput').value = '';
+    }
+
+    async function fetchResult() {
+        const id = document.getElementById('idInput').value.trim();
+        const display = document.getElementById('resultDisplay');
+        const card = document.getElementById('resultCard');
+        const btn = document.getElementById('searchBtn');
+        
+        if(!id) { alert("กรุณากรอกรหัสค้นหาครับ"); return; }
+        
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังค้นหาข้อมูล...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch(sheetLinks[currentType]);
+            const data = await response.text();
+            
+            // แยกข้อมูล CSV เป็นบรรทัดและคอลัมน์
+            const rows = data.split('\n').map(row => row.split(','));
+            
+            // ค้นหา ID จากคอลัมน์แรก (ID ต้องตรงกันเป๊ะ)
+            const result = rows.find(row => row[0] && row[0].trim() === id);
+
+            display.style.display = 'block';
+            
+            if (result) {
+                const [studentId, name, status, rank, docLink] = result;
+                
+                // กำหนดสีและไอคอนตามสถานะที่พิมพ์ใน Sheet
+                let color = status.includes("ตัวจริง") ? "#28a745" : (status.includes("สำรอง") ? "#fd7e14" : "#dc3545");
+                let icon = status.includes("ตัวจริง") ? "fa-check-circle" : (status.includes("สำรอง") ? "fa-clock" : "fa-times-circle");
+
+                card.innerHTML = `
+                    <i class="fas ${icon}" style="font-size: 5rem; color: ${color};"></i>
+                    <h2 style="margin-top:20px; color: ${color}; font-size: 1.8rem;">${status}</h2>
+                    <div style="text-align: left; background: #f9f9f9; padding: 25px; border-radius: 20px; margin: 25px 0; border: 1px solid #eee;">
+                        <p style="margin-bottom:10px; font-size: 1.1rem;"><strong>ชื่อ-นามสกุล:</strong> ${name}</p>
+                        <p style="margin-bottom:10px; color: #555;"><strong>ประเภท:</strong> ${currentType.toUpperCase()}</p>
+                        <p style="color: #555;"><strong>ลำดับที่ได้:</strong> ${rank}</p>
+                    </div>
+                    ${docLink && docLink.trim() !== "" ? 
+                        `<a href="${docLink.trim()}" class="btn-download" target="_blank"><i class="fas fa-file-download"></i> ดาวน์โหลดเอกสารรายงานตัว</a>` : 
+                        "<p style='color:#888; font-size:0.85rem;'>*โปรดติดตามกำหนดการรายงานตัวตามระเบียบการ</p>"
+                    }
+                `;
+            } else {
+                card.innerHTML = `
+                    <i class="fas fa-user-times" style="font-size: 4rem; color: #ccc;"></i>
+                    <h3 style="margin-top:20px; color: #888;">ไม่พบข้อมูลรหัส "${id}"</h3>
+                    <p style="color:#999; margin-top:10px;">โปรดตรวจสอบความถูกต้องของรหัส หรือเลือกประเภทการสมัครใหม่อีกครั้ง</p>
+                `;
+            }
+        } catch (error) {
+            alert("ไม่สามารถเข้าถึงฐานข้อมูลได้ โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ต");
+        } finally {
+            btn.innerHTML = 'ตรวจสอบผลการสอบ';
+            btn.disabled = false;
+        }
+    }
+
+    // 🕒 ระบบตรวจสอบวันเวลาประกาศผล (แก้ไขวันที่ตรงนี้ได้เลยครับ)
+    window.onload = function() {
+        const now = new Date().getTime();
+        
+        // กำหนดการประกาศผลตามปฏิทินจริง
+        const schedules = {
+            'quota':   new Date("January 21, 2026 08:30:00").getTime(),
+            'gifted':  new Date("February 27, 2026 08:30:00").getTime(),
+            'special': new Date("March 26, 2026 08:30:00").getTime(),
+            'general': new Date("April 1, 2026 08:30:00").getTime()
+        };
+
+        for (let type in schedules) {
+            const btn = document.getElementById(`btn-${type}`);
+            if (now < schedules[type]) {
+                btn.classList.add('disabled');
+                // เปลี่ยนข้อความบนปุ่มเป็น "ยังไม่ประกาศผล"
+                btn.innerHTML = btn.innerText + '<br><span style="font-size:0.75rem; color:#dc3545; font-weight:normal;">(ยังไม่ประกาศผล)</span>';
+            }
+        }
+    };
+</script>
+</body>
+</html>
